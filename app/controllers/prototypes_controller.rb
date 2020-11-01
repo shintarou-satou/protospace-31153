@@ -1,5 +1,5 @@
 class PrototypesController < ApplicationController
- before_action :move_to_index, except: [:index, :show] 
+ before_action :move_to_index, except: [:index, :show, :create, :new, :update, :destroy, :update] 
 
   def  index   
     @prototypes = Prototype.all
@@ -13,6 +13,7 @@ class PrototypesController < ApplicationController
     @prototype = Prototype.find(params[:id])
     @comment = Comment.new
     @comments = @prototype.comments.includes(:user)
+    # binding.pry
   end
 
 
@@ -55,7 +56,7 @@ class PrototypesController < ApplicationController
   end
 
   def move_to_index
-    unless 
+    unless user_signed_in?
       redirect_to  action: :index
     end
   end
